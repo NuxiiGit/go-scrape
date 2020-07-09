@@ -1,3 +1,3 @@
-# go-crawl
+# go-scrape
 
-A web crawler written in Go, which offers various methods of retreiving site and file information.
+A web scraper written in Go, which offers various methods of retreiving site and file information.
