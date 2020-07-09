@@ -1,7 +1,15 @@
 package scraper
 
-import "fmt"
+import (
+    "net/http"
+    "io/ioutil"
+)
 
-func Hello() {
-    fmt.Println("hewwo")
+func ReadURL(url string) (context []byte, err error) {
+    response, err := http.Get(url)
+    defer response.Body.Close()
+    if err != nil {
+        return nil, err
+    }
+    return ioutil.ReadAll(response.Body)
 }

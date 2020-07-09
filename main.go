@@ -1,18 +1,13 @@
 package main
 
-import "go-scrape/scraper"
-
 import (
-    "fmt"
-    "io/ioutil"
-    "log"
-    "net/http"
+    "go-scrape/scraper"
     "os"
+    "log"
+    "fmt"
 )
 
 func main() {
-    scraper.Hello()
-
     args := os.Args[1:]
     var url string
     if len(args) < 1 {
@@ -21,12 +16,7 @@ func main() {
     } else {
         url = args[0]
     }
-    response, err := http.Get(url)
-    if err != nil {
-        log.Fatal(err)
-    }
-    context, err := ioutil.ReadAll(response.Body)
-    response.Body.Close()
+    context, err := scraper.ReadURL(url)
     if err != nil {
         log.Fatal(err)
     }
