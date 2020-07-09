@@ -1,5 +1,7 @@
 package main
 
+import "go-scrape/scraper"
+
 import (
     "fmt"
     "io/ioutil"
@@ -9,6 +11,8 @@ import (
 )
 
 func main() {
+    scraper.Hello()
+
     args := os.Args[1:]
     var url string
     if len(args) < 1 {
