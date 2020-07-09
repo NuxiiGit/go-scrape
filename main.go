@@ -1,12 +1,23 @@
 package main
 
-import "fmt"
-import "io/ioutil"
-import "log"
-import "net/http"
+import (
+    "fmt"
+    "io/ioutil"
+    "log"
+    "net/http"
+    "os"
+)
 
 func main() {
-    response, err := http.Get("https://nuxiigit.github.io/README.txt")
+    args := os.Args[1:]
+    var url string
+    if len(args) < 1 {
+        log.Print("please supply a url to scrape")
+        url = "https://nuxiigit.github.io/README.txt"
+    } else {
+        url = args[0]
+    }
+    response, err := http.Get(url)
     if err != nil {
         log.Fatal(err)
     }
