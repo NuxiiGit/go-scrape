@@ -3,22 +3,20 @@ package main
 import (
     "go-scrape/scraper"
     "os"
-    "log"
     "fmt"
 )
 
 func main() {
-    args := os.Args[1:]
-    var url string
+    args := os.Args[1 :]
     if len(args) < 1 {
-        url = "https://nuxiigit.github.io/README.txt"
-        fmt.Printf("please supply a url to scrape\ndefaulting to -- %s\n", url)
+        fmt.Print("usage:\n  go-scrape <url>\n")
     } else {
-        url = args[0]
+        url := args[0]
+        context, err := scraper.ReadURL(url)
+        if err != nil {
+            fmt.Printf("an error occurred when reading the url -- %s", err)
+        } else {
+            fmt.Printf("%s", context)
+        }
     }
-    context, err := scraper.ReadURL(url)
-    if err != nil {
-        log.Fatal(err)
-    }
-    fmt.Printf("%s", context)
 }
