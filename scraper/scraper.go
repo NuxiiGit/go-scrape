@@ -7,9 +7,10 @@ import (
 
 func ReadURL(url string) (context []byte, err error) {
     response, err := http.Get(url)
-    defer response.Body.Close()
     if err != nil {
         return nil, err
     }
-    return ioutil.ReadAll(response.Body)
+    a, b := ioutil.ReadAll(response.Body)
+    response.Body.Close()
+    return a, b
 }

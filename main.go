@@ -14,7 +14,7 @@ func main() {
         url := args[0]
         context, err := scraper.ReadURL(url)
         if err != nil {
-            fmt.Printf("an error occurred when reading the url -- %s", err)
+            fmt.Printf("an error occurred when reading the url -- %s\n", err)
         } else {
             fmt.Printf("%s", context)
         }
