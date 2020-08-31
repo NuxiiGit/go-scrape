@@ -11,8 +11,8 @@ func main() {
     args := os.Args[1:]
     var url string
     if len(args) < 1 {
-        log.Print("please supply a url to scrape")
         url = "https://nuxiigit.github.io/README.txt"
+        fmt.Printf("please supply a url to scrape\ndefaulting to -- %s\n", url)
     } else {
         url = args[0]
     }
