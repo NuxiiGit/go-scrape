@@ -1,3 +1,4 @@
+// Provides functions for scraping and parsing local and remote files.
 package scraper
 
 import (
@@ -6,6 +7,7 @@ import (
     "io/ioutil"
 )
 
+// Attempts to scrape a remote file if this URL points to an accessible webpage.
 func ReadURL(url string) ([]byte, error) {
     response, err := http.Get(url)
     if err != nil {
@@ -16,6 +18,7 @@ func ReadURL(url string) ([]byte, error) {
     return context, err
 }
 
+// Attempts to scrape a local file if it exists, otherwise it assumes the filepath is a URL.
 func ReadFile(file string) ([]byte, error) {
     if _, err := os.Stat(file); os.IsNotExist(err) {
         return ReadURL(file)
