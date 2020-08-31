@@ -12,7 +12,7 @@ func main() {
         fmt.Print("usage:\n  go-scrape <url>\n")
     } else {
         url := args[0]
-        context, err := scraper.ReadURL(url)
+        context, err := scraper.ReadFile(url)
         if err != nil {
             fmt.Printf("an error occurred when scraping:\n%s\n", err)
         } else {

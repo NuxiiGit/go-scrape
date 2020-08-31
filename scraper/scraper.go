@@ -17,9 +17,9 @@ func ReadURL(url string) (context []byte, err error) {
 }
 
 func ReadFile(file string) (context []byte, err error) {
-    if _, err := os.Stat(file); err == nil {
-        return ioutil.ReadFile(file)
-    } else {
+    if _, err := os.Stat(file); os.IsNotExist(err) {
         return ReadURL(file)
+    } else {
+        return ioutil.ReadFile(file)
     }
 }
