@@ -6,17 +6,17 @@ import (
     "io/ioutil"
 )
 
-func ReadURL(url string) (context []byte, err error) {
+func ReadURL(url string) ([]byte, error) {
     response, err := http.Get(url)
     if err != nil {
         return nil, err
     }
-    a, b := ioutil.ReadAll(response.Body)
+    context, err := ioutil.ReadAll(response.Body)
     response.Body.Close()
-    return a, b
+    return context, err
 }
 
-func ReadFile(file string) (context []byte, err error) {
+func ReadFile(file string) ([]byte, error) {
     if _, err := os.Stat(file); os.IsNotExist(err) {
         return ReadURL(file)
     } else {
