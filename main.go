@@ -9,7 +9,7 @@ import (
 func main() {
     args := os.Args[1 :]
     if len(args) < 1 {
-        fmt.Print("usage:\n  go-scrape <url>\n")
+        fmt.Println("usage:\n  go-scrape <url>")
     } else {
         url := args[0]
         context, err := scraper.ReadFile(url)

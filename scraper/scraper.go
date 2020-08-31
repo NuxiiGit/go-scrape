@@ -20,9 +20,9 @@ func ReadURL(url string) ([]byte, error) {
 
 // Attempts to scrape a local file if it exists, otherwise it assumes the filepath is a URL.
 func ReadFile(file string) ([]byte, error) {
-    if _, err := os.Stat(file); os.IsNotExist(err) {
-        return ReadURL(file)
-    } else {
+    if _, err := os.Stat(file); err == nil {
         return ioutil.ReadFile(file)
+    } else {
+        return ReadURL(file)
     }
 }
