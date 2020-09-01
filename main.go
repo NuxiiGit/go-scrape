@@ -16,7 +16,7 @@ func main() {
         if err != nil {
             fmt.Printf("an error occurred when scraping:\n%s\n", err)
         } else {
-            fmt.Printf("%s", context)
+            fmt.Printf("%s\n", context)
         }
     }
 }
