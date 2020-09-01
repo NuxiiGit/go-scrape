@@ -6,6 +6,7 @@ import (
     "net/http"
     "io/ioutil"
     "bytes"
+    "strings"
     "encoding/xml"
 )
 
@@ -49,7 +50,9 @@ func (elem *HTMLElement) EncodeJSON(buffer *bytes.Buffer) {
     buffer.WriteString(elem.XMLName.Local)
     buffer.WriteString(`","attrs":[`)
     buffer.WriteString(`],"inner":"`)
-    buffer.Write(elem.Inner)
+    buffer.WriteString(strings.Replace(strings.Replace(string(elem.Inner),
+            "\\", "\\\\", -1),
+            "\"", "\\\"", -1))
     buffer.WriteString(`","children":[`)
     buffer.WriteString(`]`)
     buffer.WriteString(`}`)
