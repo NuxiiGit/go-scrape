@@ -57,7 +57,7 @@ func sanitise(dirty string) string {
 // Encodes a HTML element into JSON.
 func (elem *HTMLElement) EncodeJSON(buffer *bytes.Buffer) {
     buffer.WriteString(`{"name":"`)
-    buffer.WriteString(elem.XMLName.Local)
+    buffer.WriteString(sanitise(elem.XMLName.Local))
     buffer.WriteString(`","attrs":[`)
     buffer.WriteString(`],"inner":"`)
     buffer.WriteString(sanitise(string(elem.Inner)))
