@@ -45,10 +45,12 @@ func (elem *HTMLElement) UnmashalXML(decoder *xml.Decoder, start xml.StartElemen
 
 // Encodes a HTML element into JSON.
 func (elem *HTMLElement) EncodeJSON(buffer *bytes.Buffer) {
-    buffer.WriteString(`{`)
-    buffer.WriteString(` "name": "`)
+    buffer.WriteString(`{"name":"`)
     buffer.WriteString(elem.Name.Local)
-    buffer.WriteString(`" `)
+    buffer.WriteString(`","attrs":[`)
+    buffer.WriteString(`],"inner":"`)
+    buffer.WriteString(`","children":[`)
+    buffer.WriteString(`]`)
     buffer.WriteString(`}`)
     // return fmt.Sprintf(`{ name '%s' attrs '%s' inner '%s' children '%s' }`, elem.Name, elem.Attrs, elem.Inner, elem.Children)
 }

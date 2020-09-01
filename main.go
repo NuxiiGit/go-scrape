@@ -24,6 +24,7 @@ func main() {
                 var buffer bytes.Buffer
                 node.EncodeJSON(&buffer)
                 fmt.Printf("%s\n", &buffer)
+                fmt.Printf("%s\n", &node)
             }
         }
     }
