@@ -59,16 +59,23 @@ func (elem *HTMLElement) EncodeJSON(buffer *bytes.Buffer) {
     buffer.WriteString(`{"name":"`)
     buffer.WriteString(sanitise(elem.XMLName.Local))
     buffer.WriteString(`","attrs":[`)
+    for _, attr := range elem.Attrs {
+        buffer.WriteString(`{"name":"`)
+        buffer.WriteString(sanitise(attr.Name.Local))
+        buffer.WriteString(`","value":"`)
+        buffer.WriteString(sanitise(attr.Value))
+        buffer.WriteString(`"},`)
+    }
     buffer.WriteString(`],"inner":"`)
     buffer.WriteString(sanitise(string(elem.Inner)))
     buffer.WriteString(`","children":[`)
-    buffer.WriteString(`]`)
+    buffer.WriteString(`],`)
     buffer.WriteString(`}`)
 }
 
 // Decodes a HTML page into a tree structure.
 func DecodeHTML(html []byte) (HTMLElement, error) {
-    buffer := bytes.NewBufferString("<root hello=\"world\">")
+    buffer := bytes.NewBufferString("<root>")
     buffer.Write(html)
     buffer.WriteString("</root>")
     decoder := xml.NewDecoder(buffer)
