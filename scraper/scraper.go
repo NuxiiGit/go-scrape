@@ -6,6 +6,7 @@ import (
     "net/http"
     "io/ioutil"
     "bytes"
+    "html"
     "strings"
     "encoding/xml"
 )
@@ -44,15 +45,20 @@ func (elem *HTMLElement) UnmashalXML(decoder *xml.Decoder, start xml.StartElemen
     return decoder.DecodeElement((*htmlelement)(elem), &start)
 }
 
+func sanitise(dirty string) string {
+    phase0 := html.UnescapeString(dirty)
+    phase1 := strings.Replace(phase0, "\\", "\\\\", -1)
+    phase2 := strings.Replace(phase1, "\"", "\\\"", -1)
+    return phase2
+}
+
 // Encodes a HTML element into JSON.
 func (elem *HTMLElement) EncodeJSON(buffer *bytes.Buffer) {
     buffer.WriteString(`{"name":"`)
     buffer.WriteString(elem.XMLName.Local)
     buffer.WriteString(`","attrs":[`)
     buffer.WriteString(`],"inner":"`)
-    buffer.WriteString(strings.Replace(strings.Replace(string(elem.Inner),
-            "\\", "\\\\", -1),
-            "\"", "\\\"", -1))
+    buffer.WriteString(sanitise(string(elem.Inner)))
     buffer.WriteString(`","children":[`)
     buffer.WriteString(`]`)
     buffer.WriteString(`}`)
