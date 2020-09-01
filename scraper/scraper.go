@@ -45,7 +45,9 @@ func (elem *HTMLElement) UnmashalXML(decoder *xml.Decoder, start xml.StartElemen
 
 // Decodes a HTML page into a tree structure.
 func DecodeHTML(html []byte) (HTMLElement, error) {
-    buffer := bytes.NewBuffer(html)
+    buffer := bytes.NewBufferString("<root>")
+    buffer.Write(html)
+    buffer.WriteString("</root>")
     decoder := xml.NewDecoder(buffer)
     var root HTMLElement
     err := decoder.Decode(&root)
