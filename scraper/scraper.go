@@ -69,6 +69,10 @@ func (elem *HTMLElement) EncodeJSON(buffer *bytes.Buffer) {
     buffer.WriteString(`],"inner":"`)
     buffer.WriteString(sanitise(string(elem.Inner)))
     buffer.WriteString(`","children":[`)
+    for _, child := range elem.Children {
+        child.EncodeJSON(buffer)
+        buffer.WriteString(",")
+    }
     buffer.WriteString(`],`)
     buffer.WriteString(`}`)
 }
