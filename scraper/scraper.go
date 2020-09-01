@@ -5,6 +5,7 @@ import (
     "os"
     "net/http"
     "io/ioutil"
+    "encoding/xml"
 )
 
 // Attempts to scrape a remote file if this URL points to an accessible webpage.
@@ -25,4 +26,12 @@ func ReadFile(file string) ([]byte, error) {
     } else {
         return ReadURL(file)
     }
+}
+
+// Represents a HTML element.
+type HTMLElement struct {
+    Name xml.Name
+    Attrs []xml.Attr `xml:"-"`
+    Inner []byte `xml:",innerxml"`
+    Children []HTMLElement `xml:",any"`
 }
