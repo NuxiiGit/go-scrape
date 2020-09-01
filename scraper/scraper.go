@@ -49,10 +49,10 @@ func (elem *HTMLElement) EncodeJSON(buffer *bytes.Buffer) {
     buffer.WriteString(elem.XMLName.Local)
     buffer.WriteString(`","attrs":[`)
     buffer.WriteString(`],"inner":"`)
+    buffer.Write(elem.Inner)
     buffer.WriteString(`","children":[`)
     buffer.WriteString(`]`)
     buffer.WriteString(`}`)
-    // return fmt.Sprintf(`{ name '%s' attrs '%s' inner '%s' children '%s' }`, elem.Name, elem.Attrs, elem.Inner, elem.Children)
 }
 
 // Decodes a HTML page into a tree structure.
