@@ -49,7 +49,9 @@ func sanitise(dirty string) string {
     phase0 := html.UnescapeString(dirty)
     phase1 := strings.Replace(phase0, "\\", "\\\\", -1)
     phase2 := strings.Replace(phase1, "\"", "\\\"", -1)
-    return phase2
+    phase3 := strings.Replace(phase2, "\n", "\\n", -1)
+    phase4 := strings.Replace(phase3, "\r", "\\r", -1)
+    return phase4
 }
 
 // Encodes a HTML element into JSON.
