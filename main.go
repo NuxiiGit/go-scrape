@@ -20,7 +20,7 @@ func main() {
             if err != nil {
                 fmt.Printf("an error occurred when decoding the page:\n%s\n", err)
             } else {
-                fmt.Printf("%s\n", node)
+                fmt.Printf("%s\n", node.String())
             }
         }
     }

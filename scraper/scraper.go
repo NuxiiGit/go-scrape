@@ -2,6 +2,7 @@
 package scraper
 
 import (
+    "fmt"
     "os"
     "net/http"
     "io/ioutil"
@@ -41,6 +42,10 @@ func (elem *HTMLElement) UnmashalXML(decoder *xml.Decoder, start xml.StartElemen
     elem.Attrs = start.Attr
     type htmlelement HTMLElement
     return decoder.DecodeElement((*htmlelement)(elem), &start)
+}
+
+func (elem *HTMLElement) String() string {
+    return fmt.Sprintf(`{ name '%s' attrs '%s' inner '%s' children '%s' }`, elem.Name, elem.Attrs, elem.Inner, elem.Children)
 }
 
 // Decodes a HTML page into a tree structure.
