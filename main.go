@@ -22,7 +22,7 @@ func main() {
                 fmt.Printf("an error occurred when decoding the page:\n%s\n", err)
             } else {
                 var buffer bytes.Buffer
-                node.WriteJSON(&buffer)
+                node.EncodeJSON(&buffer)
                 fmt.Printf("%s\n", &buffer)
             }
         }

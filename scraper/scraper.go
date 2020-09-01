@@ -44,7 +44,7 @@ func (elem *HTMLElement) UnmashalXML(decoder *xml.Decoder, start xml.StartElemen
 }
 
 // Encodes a HTML element into JSON.
-func (elem *HTMLElement) WriteJSON(buffer *bytes.Buffer) {
+func (elem *HTMLElement) EncodeJSON(buffer *bytes.Buffer) {
     buffer.WriteString(`{`)
     buffer.WriteString(` "name": "`)
     buffer.WriteString(elem.Name.Local)
