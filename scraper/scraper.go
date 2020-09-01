@@ -5,6 +5,7 @@ import (
     "os"
     "net/http"
     "io/ioutil"
+    "bytes"
     "encoding/xml"
 )
 
@@ -31,7 +32,24 @@ func ReadFile(file string) ([]byte, error) {
 // Represents a HTML element.
 type HTMLElement struct {
     Name xml.Name
-    Attrs []xml.Attr `xml:"-"`
+    Attrs []xml.Attr `xml:",attr"`
     Inner []byte `xml:",innerxml"`
     Children []HTMLElement `xml:",any"`
+}
+
+func (elem *HTMLElement) UnmashalXML(decoder *xml.Decoder, start xml.StartElement) error {
+    elem.Attrs = start.Attr
+    type htmlelement HTMLElement
+    return decoder.DecodeElement((*htmlelement)(elem), &start)
+}
+
+func DecodeHTML(html []byte) (HTMLElement, error) {
+    buffer := bytes.NewBuffer(html)
+    decoder := xml.NewDecoder(buffer)
+    var root HTMLElement
+    err := decoder.Decode(&root)
+    if err != nil {
+        return root, err
+    }
+    return root, nil
 }
