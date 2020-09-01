@@ -2,7 +2,6 @@
 package scraper
 
 import (
-    "fmt"
     "os"
     "net/http"
     "io/ioutil"
@@ -44,8 +43,14 @@ func (elem *HTMLElement) UnmashalXML(decoder *xml.Decoder, start xml.StartElemen
     return decoder.DecodeElement((*htmlelement)(elem), &start)
 }
 
-func (elem *HTMLElement) String() string {
-    return fmt.Sprintf(`{ name '%s' attrs '%s' inner '%s' children '%s' }`, elem.Name, elem.Attrs, elem.Inner, elem.Children)
+// Encodes a HTML element into JSON.
+func (elem *HTMLElement) WriteJSON(buffer *bytes.Buffer) {
+    buffer.WriteString(`{`)
+    buffer.WriteString(` "name": "`)
+    buffer.WriteString(elem.Name.Local)
+    buffer.WriteString(`" `)
+    buffer.WriteString(`}`)
+    // return fmt.Sprintf(`{ name '%s' attrs '%s' inner '%s' children '%s' }`, elem.Name, elem.Attrs, elem.Inner, elem.Children)
 }
 
 // Decodes a HTML page into a tree structure.

@@ -4,6 +4,7 @@ import (
     "go-scrape/scraper"
     "os"
     "fmt"
+    "bytes"
 )
 
 func main() {
@@ -20,7 +21,9 @@ func main() {
             if err != nil {
                 fmt.Printf("an error occurred when decoding the page:\n%s\n", err)
             } else {
-                fmt.Printf("%s\n", node.String())
+                var buffer bytes.Buffer
+                node.WriteJSON(&buffer)
+                fmt.Printf("%s\n", &buffer)
             }
         }
     }
