@@ -43,6 +43,7 @@ func (elem *HTMLElement) UnmashalXML(decoder *xml.Decoder, start xml.StartElemen
     return decoder.DecodeElement((*htmlelement)(elem), &start)
 }
 
+// Decodes a HTML page into a tree structure.
 func DecodeHTML(html []byte) (HTMLElement, error) {
     buffer := bytes.NewBuffer(html)
     decoder := xml.NewDecoder(buffer)

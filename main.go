@@ -16,7 +16,12 @@ func main() {
         if err != nil {
             fmt.Printf("an error occurred when scraping:\n%s\n", err)
         } else {
-            fmt.Printf("%s\n", context)
+            node, err := scraper.DecodeHTML(context)
+            if err != nil {
+                fmt.Printf("an error occurred when decoding the page:\n%s\n", err)
+            } else {
+                fmt.Printf("%s\n", node)
+            }
         }
     }
 }
