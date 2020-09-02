@@ -35,7 +35,7 @@ func ReadFile(file string) ([]byte, error) {
 type HTMLElement struct {
     XMLName xml.Name
     Attrs []xml.Attr `xml:",any,attr"`
-    Inner []byte `xml:",chardata"`
+    Content []byte `xml:",chardata"`
     Children []HTMLElement `xml:",any"`
 }
 
@@ -66,8 +66,8 @@ func (elem *HTMLElement) EncodeJSON(buffer *bytes.Buffer) {
         buffer.WriteString(sanitise(attr.Value))
         buffer.WriteString(`"},`)
     }
-    buffer.WriteString(`],"inner":"`)
-    buffer.WriteString(sanitise(string(elem.Inner)))
+    buffer.WriteString(`],"content":"`)
+    buffer.WriteString(sanitise(string(elem.Content)))
     buffer.WriteString(`","children":[`)
     for _, child := range elem.Children {
         child.EncodeJSON(buffer)
