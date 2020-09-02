@@ -35,7 +35,7 @@ func ReadFile(file string) ([]byte, error) {
 type HTMLElement struct {
     XMLName xml.Name
     Attrs []xml.Attr `xml:",any,attr"`
-    Inner []byte `xml:",innerxml"`
+    Inner []byte `xml:",chardata"`
     Children []HTMLElement `xml:",any"`
 }
 
@@ -79,9 +79,9 @@ func (elem *HTMLElement) EncodeJSON(buffer *bytes.Buffer) {
 
 // Decodes a HTML page into a tree structure.
 func DecodeHTML(html []byte) (HTMLElement, error) {
-    buffer := bytes.NewBufferString("<root>")
+    buffer := bytes.NewBufferString(`<root>`)
     buffer.Write(html)
-    buffer.WriteString("</root>")
+    buffer.WriteString(`</root>`)
     decoder := xml.NewDecoder(buffer)
     decoder.Strict = false
     decoder.AutoClose = xml.HTMLAutoClose
