@@ -11,7 +11,7 @@ func main() {
     args := os.Args[1 :]
     argCount := len(args)
     if argCount < 1 {
-        fmt.Println("usage:\n  go-scrape <url>")
+        fmt.Println("usage:\n  go-scrape [-json] <url>")
     } else {
         var emitter string
         var url string
