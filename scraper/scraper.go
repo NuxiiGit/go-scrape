@@ -44,7 +44,7 @@ func (elem *HTMLElement) UnmashalXML(decoder *xml.Decoder, start xml.StartElemen
     return decoder.DecodeElement((*htmlelement)(elem), &start)
 }
 
-func sanitise(dirty string) string {
+func sanitiseText(dirty string) string {
     phase1 := strings.Replace(dirty, "\\", "\\\\", -1)
     phase2 := strings.Replace(phase1, "\"", "\\\"", -1)
     phase3 := strings.Replace(phase2, "\n", "\\n", -1)
@@ -55,17 +55,17 @@ func sanitise(dirty string) string {
 // Encodes a HTML element into JSON.
 func (elem *HTMLElement) EncodeJSON(buffer *bytes.Buffer) {
     buffer.WriteString(`{"name":"`)
-    buffer.WriteString(sanitise(elem.XMLName.Local))
+    buffer.WriteString(sanitiseText(elem.XMLName.Local))
     buffer.WriteString(`","attrs":[`)
     for _, attr := range elem.Attrs {
         buffer.WriteString(`{"name":"`)
-        buffer.WriteString(sanitise(attr.Name.Local))
+        buffer.WriteString(sanitiseText(attr.Name.Local))
         buffer.WriteString(`","value":"`)
-        buffer.WriteString(sanitise(attr.Value))
+        buffer.WriteString(sanitiseText(attr.Value))
         buffer.WriteString(`"},`)
     }
     buffer.WriteString(`],"content":"`)
-    buffer.WriteString(sanitise(string(elem.Content)))
+    buffer.WriteString(sanitiseText(string(elem.Content)))
     buffer.WriteString(`","children":[`)
     for _, child := range elem.Children {
         child.EncodeJSON(buffer)
