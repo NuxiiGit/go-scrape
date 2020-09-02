@@ -83,6 +83,9 @@ func DecodeHTML(html []byte) (HTMLElement, error) {
     buffer.Write(html)
     buffer.WriteString("</root>")
     decoder := xml.NewDecoder(buffer)
+    decoder.Strict = false
+    decoder.AutoClose = xml.HTMLAutoClose
+    decoder.Entity = xml.HTMLEntity
     var root HTMLElement
     err := decoder.Decode(&root)
     if err != nil {
