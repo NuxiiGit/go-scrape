@@ -6,7 +6,6 @@ import (
     "net/http"
     "io/ioutil"
     "bytes"
-    "html"
     "strings"
     "encoding/xml"
 )
@@ -46,8 +45,7 @@ func (elem *HTMLElement) UnmashalXML(decoder *xml.Decoder, start xml.StartElemen
 }
 
 func sanitise(dirty string) string {
-    phase0 := html.UnescapeString(dirty)
-    phase1 := strings.Replace(phase0, "\\", "\\\\", -1)
+    phase1 := strings.Replace(dirty, "\\", "\\\\", -1)
     phase2 := strings.Replace(phase1, "\"", "\\\"", -1)
     phase3 := strings.Replace(phase2, "\n", "\\n", -1)
     phase4 := strings.Replace(phase3, "\r", "\\r", -1)
