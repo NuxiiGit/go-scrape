@@ -11,7 +11,7 @@ func main() {
     args := os.Args[1 :]
     argCount := len(args)
     if argCount < 1 {
-        fmt.Println("usage:\n  go-scrape [-json] <url>")
+        fmt.Println("usage:\n  go-scrape [-json|xml] <url>")
     } else {
         var emitter string
         var url string
@@ -34,6 +34,10 @@ func main() {
                 fmt.Printf("an error occurred when decoding the page:\n%s\n", err)
             } else if emitter == "-json" {
                 node.EncodeJSON(&buffer)
+            } else if emitter == "-xml" {
+                fmt.Println("not implemented")
+            } else {
+                fmt.Printf("unknown emitter: %s\n", emitter)
             }
             fmt.Printf("%s\n", &buffer)
         }
