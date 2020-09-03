@@ -110,13 +110,12 @@ func (elem *HTMLElement) EncodeJSON(buffer *bytes.Buffer) {
 
 // Decodes a HTML page into a tree structure.
 func DecodeHTML(html []byte) (HTMLElement, error) {
-    buffer := bytes.NewBufferString(`<root>`)
-    buffer.Write(html)
-    buffer.WriteString(`</root>`)
+    buffer := bytes.NewBuffer(html)
     decoder := xml.NewDecoder(buffer)
     decoder.Strict = false
     decoder.AutoClose = xml.HTMLAutoClose
     decoder.Entity = xml.HTMLEntity
+    decoder.DefaultSpace = "root"
     var root HTMLElement
     err := decoder.Decode(&root)
     if err != nil {
