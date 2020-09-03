@@ -47,8 +47,13 @@ func (elem *HTMLElement) UnmashalXML(decoder *xml.Decoder, start xml.StartElemen
 // Encodes a HTML element into XML.
 func (elem *HTMLElement) EncodeXML(buffer *bytes.Buffer) {
     sanitise := func(dirty string) string {
-        phase1 := strings.Replace(dirty, "\n", "&#xD;", -1)
-        phase2 := strings.Replace(phase1, "\r", "&#xA;", -1)
+        phase1 := strings.Replace(phase1, "\"", "&quot;", -1)
+        phase2 := strings.Replace(dirty, "\n", "&#xD;", -1)
+        phase3 := strings.Replace(phase1, "\r", "&#xA;", -1)
+        phase3 := strings.Replace(phase1, "&", "&amp;", -1)
+        phase3 := strings.Replace(phase1, "'", "&apos;", -1)
+        phase3 := strings.Replace(phase1, "<", "&lt;", -1)
+        phase3 := strings.Replace(phase1, ">", "&gt;", -1)
         return phase2
     }
     buffer.WriteString(`<`)
