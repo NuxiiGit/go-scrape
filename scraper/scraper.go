@@ -47,14 +47,14 @@ func (elem *HTMLElement) UnmashalXML(decoder *xml.Decoder, start xml.StartElemen
 // Encodes a HTML element into XML.
 func (elem *HTMLElement) EncodeXML(buffer *bytes.Buffer) {
     sanitise := func(dirty string) string {
-        phase1 := strings.Replace(phase1, "\"", "&quot;", -1)
-        phase2 := strings.Replace(dirty, "\n", "&#xD;", -1)
-        phase3 := strings.Replace(phase1, "\r", "&#xA;", -1)
-        phase3 := strings.Replace(phase1, "&", "&amp;", -1)
-        phase3 := strings.Replace(phase1, "'", "&apos;", -1)
-        phase3 := strings.Replace(phase1, "<", "&lt;", -1)
-        phase3 := strings.Replace(phase1, ">", "&gt;", -1)
-        return phase2
+        phase1 := strings.Replace(dirty, "\"", "&quot;", -1)
+        phase2 := strings.Replace(phase1, "\n", "&#xD;", -1)
+        phase3 := strings.Replace(phase2, "\r", "&#xA;", -1)
+        phase4 := strings.Replace(phase3, "&", "&amp;", -1)
+        phase5 := strings.Replace(phase4, "'", "&apos;", -1)
+        phase6 := strings.Replace(phase5, "<", "&lt;", -1)
+        phase7 := strings.Replace(phase6, ">", "&gt;", -1)
+        return phase7
     }
     buffer.WriteString(`<`)
     buffer.WriteString(sanitise(elem.XMLName.Local))
@@ -82,7 +82,9 @@ func (elem *HTMLElement) EncodeJSON(buffer *bytes.Buffer) {
         phase2 := strings.Replace(phase1, "\"", "\\\"", -1)
         phase3 := strings.Replace(phase2, "\n", "\\n", -1)
         phase4 := strings.Replace(phase3, "\r", "\\r", -1)
-        return phase4
+        phase5 := strings.Replace(phase4, "\t", "\\t", -1)
+        phase6 := strings.Replace(phase5, "\f", "\\f", -1)
+        return phase6
     }
     buffer.WriteString(`{"name":"`)
     buffer.WriteString(sanitise(elem.XMLName.Local))
