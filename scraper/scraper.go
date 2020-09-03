@@ -63,6 +63,7 @@ func (elem *HTMLElement) EncodeXML(buffer *bytes.Buffer) {
     buffer.WriteString(`<`)
     buffer.WriteString(sanitiseInnerHTML(elem.XMLName.Local))
     buffer.WriteString(`>`)
+    buffer.WriteString(sanitiseInnerHTML(string(elem.Content)))
     buffer.WriteString(`</`)
     buffer.WriteString(sanitiseInnerHTML(elem.XMLName.Local))
     buffer.WriteString(`>`)

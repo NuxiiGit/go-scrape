@@ -35,7 +35,7 @@ func main() {
             } else if emitter == "-json" {
                 node.EncodeJSON(&buffer)
             } else if emitter == "-xml" {
-                fmt.Println("not implemented")
+                node.EncodeXML(&buffer)
             } else {
                 fmt.Printf("unknown emitter: %s\n", emitter)
             }
