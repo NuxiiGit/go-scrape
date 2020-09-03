@@ -62,6 +62,13 @@ func sanitiseInnerHTML(dirty string) string {
 func (elem *HTMLElement) EncodeXML(buffer *bytes.Buffer) {
     buffer.WriteString(`<`)
     buffer.WriteString(sanitiseInnerHTML(elem.XMLName.Local))
+    for _, attr := range elem.Attrs {
+        buffer.WriteString(` `)
+        buffer.WriteString(sanitiseInnerHTML(attr.Name.Local))
+        buffer.WriteString(`="`)
+        buffer.WriteString(sanitiseString(attr.Value))
+        buffer.WriteString(`"`)
+    }
     buffer.WriteString(`>`)
     buffer.WriteString(sanitiseInnerHTML(string(elem.Content)))
     buffer.WriteString(`</`)
