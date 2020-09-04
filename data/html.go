@@ -8,37 +8,34 @@ import (
 )
 
 // Represents a HTML element.
-type Element struct {
+type HTMLElement struct {
     XMLName xml.Name
     Attrs []xml.Attr `xml:",any,attr"`
     Content []byte `xml:",chardata"`
-    Children []Element `xml:",any"`
+    Children []HTMLElement `xml:",any"`
 }
 
-func (elem *Element) UnmashalXML(decoder *xml.Decoder, start xml.StartElement) error {
+func (elem *HTMLElement) UnmashalXML(decoder *xml.Decoder, start xml.StartElement) error {
     elem.Attrs = start.Attr
-    type element Element
-    return decoder.DecodeElement((*element)(elem), &start)
+    type htmlelement HTMLElement
+    return decoder.DecodeElement((*htmlelement)(elem), &start)
 }
 
 // Decodes a HTML page into a tree structure.
-func Decode(html []byte) (Element, error) {
+func DecodeHTML(html []byte) (HTMLElement, error) {
     buffer := bytes.NewBuffer(html)
     decoder := xml.NewDecoder(buffer)
     decoder.Strict = false
     decoder.AutoClose = xml.HTMLAutoClose
     decoder.Entity = xml.HTMLEntity
     decoder.DefaultSpace = "root"
-    var root Element
+    var root HTMLElement
     err := decoder.Decode(&root)
-    if err != nil {
-        return root, err
-    }
-    return root, nil
+    return root, err
 }
 
 // Encodes a HTML element into XML.
-func (elem *Element) EncodeXML(buffer *bytes.Buffer) {
+func (elem *HTMLElement) EncodeXML(buffer *bytes.Buffer) {
     sanitise := func(dirty string) string {
         phase1 := strings.Replace(dirty, "&", "&amp;", -1)
         phase2 := strings.Replace(phase1, "\"", "&quot;", -1)
@@ -70,7 +67,7 @@ func (elem *Element) EncodeXML(buffer *bytes.Buffer) {
 }
 
 // Encodes a HTML element into JSON.
-func (elem *Element) EncodeJSON(buffer *bytes.Buffer) {
+func (elem *HTMLElement) EncodeJSON(buffer *bytes.Buffer) {
     sanitise := func(dirty string) string {
         phase1 := strings.Replace(dirty, "\\", "\\\\", -1)
         phase2 := strings.Replace(phase1, "\"", "\\\"", -1)

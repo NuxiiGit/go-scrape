@@ -26,7 +26,7 @@ func main() {
             fmt.Println(string(context))
         } else {
             emitter := args[1]
-            node, err := data.Decode(context)
+            node, err := data.DecodeHTML(context)
             if err != nil {
                 fmt.Printf("an error occurred when decoding the page!\n%s\n", err)
             } else if emitter == "json" {
